@@ -1,0 +1,274 @@
+1) 
+mkdir TP2-COUTURIER-Lino
+cd TP2-COUTURIER-Lino
+git init
+git status
+
+2) 
+git branch -m develop
+echo "# TP2 : Gestion des branches" > README.md
+ls
+cat README.md
+git status 
+On branch develop
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        README.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+git add README.md
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+git add README.md
+git status
+On branch develop
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   README.md
+
+$ git commit
+( message du commit ) 
+[develop (root-commit) f67221d] Ajout du fichier README.md
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+
+3) 
+git checkout -b feature1 develop
+Switched to a new branch 'feature1'
+git status
+On branch feature1
+nothing to commit, working tree clean
+echo "Ceci est une description du projet" >> README.md
+git status
+git add
+git commit 
+( message du commit )
+git status
+On branch feature1
+nothing to commit, working tree clean
+
+4)
+git switch develop
+vi README.md
+( ajout de la ligne ) 
+git merge feature1
+error: Your local changes to the following files would be overwritten by merge:
+        README.md
+Please commit your changes or stash them before you merge.
+Aborting
+Updating f67221d..0756017
+Cette erreur signifie que j'ai apporté des modifications localement sur le fichier sur la branche 
+develop et qui Git refuse de faire la fusion car elle risquerait d'écraser ces modifications.
+vi README.md 
+( changement dans le fichier dans la branche develop )
+git switch feature1
+vi README.md
+( changement dans le fichier dans la branche feature1 )
+git merge feature1
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+nano README.md
+( modification des fichiers )
+git status
+git commit 
+[develop acdf1fe] Merge branch 'feature1' into develop
+$ git log --oneline --graph --all
+*   acdf1fe (HEAD -> develop) Merge branch 'feature1' into develop
+|\
+| * 356aa21 (feature1) Modification du fichier README.md
+| * 0756017 Ajout d'une description
+* | eaf5145 Modification du fichier README.md
+|/
+* f67221d Ajout du fichier README.md
+
+5)
+git checkout -b feature2
+vi README.md
+( apport des modifications sur le fichier ) 
+git status 
+git add .
+git commit 
+( ajout du commit ) 
+git status
+
+6) 
+git checkout -b feature3
+git status
+vi README.md
+( ajout des modifications )
+git add .
+git commit 
+( ajout du commit ) 
+
+7)
+
+git merge feature2
+Updating acdf1fe..3b1bceb
+Fast-forward
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+git merge feature3
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+<<<<<<< HEAD
+# TP2 - GUERRREIROMARQUESFabio - Gestion des branches
+=======
+# TP2 - Gestion des branches et fusions
+>>>>>>> feature3
+Ceci est une description du projet
+Modification sur develop avant merge de f1.
+git add README.md 
+git commit
+(Ajout du commit)
+
+8)
+
+nano README.md
+( modification ) 
+git status
+git add .
+git commit 
+( Ajout du repository sur github )
+
+
+REBASE : 
+
+1) 
+
+git switch -c feature4
+git status
+echo "Cette phrase concerne la partie reabse du TP2" >> README.md
+vi README.md
+(Modification de la phrase)
+git status
+git add README.md
+git commmit -m "Ajout dans README.md - partie rebase"
+
+2) 
+echo "Cette phrase concerne la partie rebase du TP2. (feature4)" >> README.md
+git status
+git add README.md
+git commit -m "Ajout dans README.md - mention feature4"
+
+3)
+git status
+echo "Cette phrase concerne la partie rebase du TP2. (feature4) >> README.md
+cat README.md
+git status
+git add README.md
+git commit -m "Ajout dans README.md - dernière ligne feature4"
+git log --oneline --graph --all
+git log --oneline --graph --all
+* 1629b3b (HEAD -> feature4) Ajout dans README.md - dernière ligne feature4
+* beac43b Ajout dans README.md - mention feature4
+* 8720e80 Ajout dans README.md - partie rebase
+*   1b28a75 (origin/develop, develop) Merge branch 'feature3' into develop
+|\
+| * 1bcad1c (feature3) Modification du titre du fichier README.md
+* | f311d63 (feature2) Modification du titre du fichier README.md
+|/
+*   869d0a1 Merge entre la branche develop et feature1
+|\
+| * 734a4ea (feature1) Ajout d'une deuxième ligne du fichier README.md
+* | b13044a Saut à la ligne du fichier README.md
+|/
+* bb0e19b Ajout d'un titre au fichier README.md
+
+
+
+4)
+git status
+git rebase -i HEAD~3
+(On arrive dans le menu et on met pick pour le commit le plus ancien, et on met squash pour les autres)
+(On delete tous les autres messages des autres commit, hormis le tout premier)
+git status
+git log --oneline --graph --all
+$ git log --oneline --graph --all
+* f4c0491 (feature4) Ajout dans README.md - partie rebase
+*   1b28a75 (HEAD -> develop, origin/develop) Merge branch 'feature3' into develop
+|\
+| * 1bcad1c (feature3) Modification du titre du fichier README.md
+* | f311d63 (feature2) Modification du titre du fichier README.md
+|/
+*   869d0a1 Merge entre la branche develop et feature1
+|\
+| * 734a4ea (feature1) Ajout d'une deuxième ligne du fichier README.md
+* | b13044a Saut à la ligne du fichier README.md
+|/
+* bb0e19b Ajout d'un titre au fichier README.md
+
+5) 
+vi README.md
+( Modification ) 
+git add README.md
+git commit -m "Modification du titre principal"
+git status
+
+6)
+git rebase feature4
+nano README.md
+git status
+git add README.md
+git rebase --continue
+git status
+
+7) 
+La commande git merge est utilisée pour fusionner l’historique d’une branche dans une autre.
+Elle permet d’intégrer les modifications d’une branche source dans une branche cible sans 
+avoir à réecrire l'historique des commits.
+
+8) 
+
+La commande git rebase permet de réécrire l’historique d’une branche en déplaçant 
+ses commits sur une autre base, ce qui rend l’historique plus linéaire et lisible.
+Dans ce TP, elle a été utile pour garder un historique propre, en fusionnant plusieurs petits commits en 
+un seul et en évacuant les commits inutiles pour mieux comprendre l’évolution du projet.
+
+9) 
+
+Avant le rebase de feature4 sur develop :
+
+           f4c0491 (feature4)
+           |
+       1629b3b
+       |
+       beac43b
+       |
+       8720e80
+       |
+       1b28a75 (develop)
+
+Pendant le rebase avec squash :
+
+           f4c0491 (feature4)
+           |
+       (nouveau commit squashed avec message : "Ajout dans README.md - partie rebase")
+           |
+       1b28a75 (develop)
+
+
+Après le rebase : 
+
+           d3dd7e4 (develop)
+           |
+       4eab55e
+           |
+       f4c0491 (feature4)
+           |
+       (squash de feature4)
+           |
+       1b28a75
+
+Schéma global simplifié : 
+
+* d3dd7e4 (develop)          ← rebase terminé avec tous les changements
+* 4eab55e                   ← modif du titre principal
+* f4c0491 (feature4)        ← feature4 avec squash
+* 1b28a75                   ← merge feature3 dans develop
